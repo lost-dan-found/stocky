@@ -79,18 +79,24 @@ class DashboardApp(App):
             with Horizontal(id="top_row"):
                 with Vertical(id="top_left"):
                     with Vertical():
-                        self.stock1 = Static("Stock 1", id="stock_1", classes="box")
-                        self.stock2 = Static("Stock 2", id="stock_2", classes="box")
+                        self.stock1 = Static("Placeholder Stock 1", id="stock_1", classes="box")
+                        self.stock1.border_subtitle = "TSLA"
+                        self.stock2 = Static("Placeholder Stock 2", id="stock_2", classes="box")
+                        self.stock2.border_subtitle = "DANK"
 
                         yield self.stock1
                         yield self.stock2
                 with Vertical(id="top_right"):
-                    self.stock6 = Static("Stock 6", id="stock_6", classes="box")
+                    self.stock6 = Static("Placeholder Stock 6", id="stock_6", classes="box")
+                    self.stock6.border_subtitle = "META"
                     yield self.stock6
             with Horizontal(id="bottom_row"):
-                self.stock3 = Static("Stock 3", id="stock_3", classes="box")
-                self.stock4 = Static("Stock 4", id="stock_4", classes="box")
-                self.stock5 = Static("Stock 5", id="stock_5", classes="box")
+                self.stock3 = Static("Placeholder Stock 3", id="stock_3", classes="box")
+                self.stock3.border_subtitle = "APPl"
+                self.stock4 = Static("Placeholder Stock 4", id="stock_4", classes="box")
+                self.stock4.border_subtitle = "MSFT"
+                self.stock5 = Static("Placeholder Stock 5", id="stock_5", classes="box")
+                self.stock5.border_subtitle = "BTCN"
                 
                 yield self.stock3
                 yield self.stock4
