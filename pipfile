@@ -5,7 +5,9 @@ name = "pypi"
 
 [packages]
 yfinance = "*"
+pandas = "*"
 textual = "*"
+textual-plotext = "*"
 
 [dev-packages]
 textual-dev = "*"
