@@ -1,11 +1,15 @@
 from textual.app import App, ComposeResult
-from textual.widgets import Digits, Static, Input
-from textual.screen import ModalScreen
-from textual.containers import Horizontal, Vertical
+from textual.widgets import Static
+
 
 class DashboardApp(App):
+
     CSS = """
     Screen {
+        layout: grid;
+        grid-size: 3 3;          /* 3 columns, 3 rows */
+        grid-columns: 1fr 1fr 1fr;
+        grid-rows: 1fr 1fr 1fr;
         background: transparent;
     }
 
@@ -14,60 +18,22 @@ class DashboardApp(App):
         background: transparent;
         content-align: center middle;
         padding: 1 1;
-    }
-
-    #top_left {
-        width: 33%;
-        height: 100%;
-    }
-
-    #top_right {
-        width: 66%;
-        height: 100%;
-    }
-
-    #top_row {
-        width: 100%;
-        height: 66%;
-    }
-
-    #stock_1 {
-        width: 100%;
-        height: 50%;
-    }
-
-    #stock_2 {
-        width: 100%;
-        height: 50%;
-    }
-
-    #stock_3 {
-        width: 33%;
-        height: 100%;
-    }
-
-    #stock_4 {
-        width: 33%;
-        height: 100%;
-    }
-
-    #stock_5 {
-        width: 33%;
-        height: 100%;
-    }
-
-    #stock_6 {
         width: 100%;
         height: 100%;
     }
 
-    #bottom_row {
-        width: 100%;
-        height: 33%;
-    }
+    /* ---- Grid Placement ---- */
+
+    #stock1 { grid-columns: 1; grid-rows: 1; }   /* X */
+    #stock2 { grid-columns: 1; grid-rows: 2; }   /* X */
+
+    #big { grid-columns: 2; grid-rows: 1; column-span: 2; row-span: 2; }  /* OO / OO */
+
+    #stock3 { grid-columns: 1; grid-rows: 3; }   /* X */
+    #stock4 { grid-columns: 2; grid-rows: 3; }   /* X */
+    #stock5 { grid-columns: 3; grid-rows: 3; }   /* X */
     """
 
-    #add a key binding to open the location prompt
     BINDINGS = [("ctrl+l", "open_location_prompt", "Set Location")]
 
     def __init__(self, *args, **kwargs):
@@ -75,32 +41,33 @@ class DashboardApp(App):
         self.ansi_color = True
 
     def compose(self) -> ComposeResult:
-        with Vertical():
-            with Horizontal(id="top_row"):
-                with Vertical(id="top_left"):
-                    with Vertical():
-                        self.stock1 = Static("Placeholder Stock 1", id="stock_1", classes="box")
-                        self.stock1.border_subtitle = "TSLA"
-                        self.stock2 = Static("Placeholder Stock 2", id="stock_2", classes="box")
-                        self.stock2.border_subtitle = "DANK"
+        # Left column (top)
+        self.stock1 = Static("Placeholder Stock 1", id="stock1", classes="box")
+        self.stock1.border_subtitle = "TSLA"
 
-                        yield self.stock1
-                        yield self.stock2
-                with Vertical(id="top_right"):
-                    self.stock6 = Static("Placeholder Stock 6", id="stock_6", classes="box")
-                    self.stock6.border_subtitle = "META"
-                    yield self.stock6
-            with Horizontal(id="bottom_row"):
-                self.stock3 = Static("Placeholder Stock 3", id="stock_3", classes="box")
-                self.stock3.border_subtitle = "APPl"
-                self.stock4 = Static("Placeholder Stock 4", id="stock_4", classes="box")
-                self.stock4.border_subtitle = "MSFT"
-                self.stock5 = Static("Placeholder Stock 5", id="stock_5", classes="box")
-                self.stock5.border_subtitle = "BTCN"
-                
-                yield self.stock3
-                yield self.stock4
-                yield self.stock5
+        self.stock2 = Static("Placeholder Stock 2", id="stock2", classes="box")
+        self.stock2.border_subtitle = "DANK"
+
+        # Big 2x2 box
+        self.big = Static("Placeholder Big Panel", id="big", classes="box")
+        self.big.border_subtitle = "META"
+
+        # Bottom row
+        self.stock3 = Static("Placeholder Stock 3", id="stock3", classes="box")
+        self.stock3.border_subtitle = "AAPL"
+
+        self.stock4 = Static("Placeholder Stock 4", id="stock4", classes="box")
+        self.stock4.border_subtitle = "MSFT"
+
+        self.stock5 = Static("Placeholder Stock 5", id="stock5", classes="box")
+        self.stock5.border_subtitle = "BTCN"
+
+        yield self.stock1
+        yield self.big
+        yield self.stock2
+        yield self.stock3
+        yield self.stock4
+        yield self.stock5
 
 
 if __name__ == "__main__":
