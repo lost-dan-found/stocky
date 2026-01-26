@@ -35,7 +35,7 @@ class DashboardApp(App):
     def compose(self) -> ComposeResult:
         yield StockPlot("TSLA", id="stock1", classes="box")
         yield StockPlot("META", id="big", classes="box")
-        yield StockPlot("TSLA", id="stock2", classes="box")
+        yield StockPlot("APLE", id="stock2", classes="box")
         yield StockPlot("TSLA", id="stock3", classes="box")
         yield StockPlot("MSFT", id="stock4", classes="box")
         yield StockPlot("MSFT", id="stock5", classes="box")
