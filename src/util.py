@@ -1,8 +1,14 @@
+import asyncio
 import yfinance as yf
 import pandas as pd
 
+_download_lock = asyncio.Lock()
 
-def get_stock_history(ticker):
+async def get_stock_history_threadsafe(ticker):
+    async with _download_lock:
+        return await asyncio.to_thread(_get_stock_history_sync, ticker)
+
+def _get_stock_history_sync(ticker):
     data = yf.download(
         ticker,
         period="1mo",
@@ -15,13 +21,11 @@ def get_stock_history(ticker):
     if data.empty:
         return [], []
 
-    # Handle multi-index columns safely
     if isinstance(data.columns, pd.MultiIndex):
         data.columns = data.columns.get_level_values(0)
 
     closes = data["Close"]
 
-    # Ensure it's a Series
     if isinstance(closes, pd.DataFrame):
         closes = closes.iloc[:, 0]
 

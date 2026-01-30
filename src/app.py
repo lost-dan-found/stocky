@@ -1,3 +1,5 @@
+from textual.containers import VerticalScroll
+from textual.widgets import Button
 from textual.app import App, ComposeResult
 from widget import StockPlot   # the class above
 
@@ -6,9 +8,9 @@ class DashboardApp(App):
     CSS = """
     Screen {
         layout: grid;
-        grid-size: 3 3;
-        grid-columns: 1fr 1fr 1fr;
-        grid-rows: 1fr 1fr 1fr;
+        grid-size: 4 4;
+        grid-columns: 1fr 1fr 1fr 1fr;
+        grid-rows: 1fr 1fr 1fr 1fr;
     }
 
     .box {
@@ -20,7 +22,7 @@ class DashboardApp(App):
 
     #stock1 { grid-columns: 1; grid-rows: 1; }
     #stock2 { grid-columns: 1; grid-rows: 2; }
-    #big    { grid-columns: 2; grid-rows: 1; column-span: 2; row-span: 2; }
+    #big    { grid-columns: 2; grid-rows: 1; column-span: 3; row-span: 3; }
     #stock3 { grid-columns: 1; grid-rows: 3; }
     #stock4 { grid-columns: 2; grid-rows: 3; }
     #stock5 { grid-columns: 3; grid-rows: 3; }
@@ -33,11 +35,16 @@ class DashboardApp(App):
         self.ansi_color = True
 
     def compose(self) -> ComposeResult:
+
+        # with VerticalScroll():
+        #     yield Button("Button 1")
+
+        
         yield StockPlot("TSLA", id="stock1", classes="box")
         yield StockPlot("META", id="big", classes="box")
         yield StockPlot("APLE", id="stock2", classes="box")
-        yield StockPlot("TSLA", id="stock3", classes="box")
-        yield StockPlot("MSFT", id="stock4", classes="box")
+        yield StockPlot("GOOG", id="stock3", classes="box")
+        yield StockPlot("AMZN", id="stock4", classes="box")
         yield StockPlot("MSFT", id="stock5", classes="box")
 
 

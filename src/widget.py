@@ -1,21 +1,22 @@
 from textual_plotext import PlotextPlot
 from textual.widget import Widget
 import asyncio
-from util import get_stock_history  # your function
+from util import get_stock_history_threadsafe  # your function
 
 class StockPlot(PlotextPlot):
 
     def __init__(self, ticker: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ticker = ticker
-        self.ansi_color = True
         self.border_subtitle = ticker
+        self.ALLOW_SELECT = False
 
     async def on_mount(self):
         await self.load_data()
 
     async def load_data(self):
-        x, prices = await asyncio.to_thread(get_stock_history, self.ticker)
+        x, prices = await get_stock_history_threadsafe(self.ticker)
+        #x, prices = get_stock_history(self.ticker)
 
         if not x or not prices:
             return
