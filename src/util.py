@@ -8,6 +8,10 @@ async def get_stock_history_threadsafe(ticker):
     async with _download_lock:
         return await asyncio.to_thread(_get_stock_history_sync, ticker)
 
+async def get_stock_info_threadsafe(ticker):
+    async with _download_lock:
+        return await asyncio.to_thread(_get_stock_info_sync, ticker)
+
 def _get_stock_history_sync(ticker):
     data = yf.download(
         ticker,
@@ -33,3 +37,9 @@ def _get_stock_history_sync(ticker):
     prices = closes.tolist()
 
     return dates, prices
+
+def _get_stock_info_sync(ticker):
+    try:
+        return yf.Ticker(ticker).info
+    except Exception:
+        return {}
