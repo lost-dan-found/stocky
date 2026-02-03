@@ -13,6 +13,8 @@ async def get_stock_info_threadsafe(ticker):
         return await asyncio.to_thread(_get_stock_info_sync, ticker)
 
 def _get_stock_history_sync(ticker):
+    if not ticker:
+        return [], []
     data = yf.download(
         ticker,
         period="1mo",
@@ -39,6 +41,8 @@ def _get_stock_history_sync(ticker):
     return dates, prices
 
 def _get_stock_info_sync(ticker):
+    if not ticker:
+        return {}
     try:
         return yf.Ticker(ticker).info
     except Exception:

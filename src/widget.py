@@ -11,15 +11,39 @@ class StockPlot(PlotextPlot):
             self.ticker = ticker
             super().__init__()
 
+    class Delete(Message):
+        def __init__(self, plot, ticker: str):
+            self.plot = plot
+            self.ticker = ticker
+            super().__init__()
+
+    BINDINGS = [
+        ("enter,space", "select", "Select"),
+        ("delete,backspace", "delete", "Delete"),
+    ]
+
     def __init__(self, ticker: str, detailed: bool = False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ticker = ticker
         self.detailed = detailed
         self.border_subtitle = ticker
         self.ALLOW_SELECT = False
+        if not detailed:
+            self.can_focus = True
 
     async def on_click(self):
         self.post_message(self.Selected(self.ticker))
+
+    def action_select(self):
+        self.post_message(self.Selected(self.ticker))
+
+    def action_delete(self):
+        if not self.detailed:
+            self.post_message(self.Delete(self, self.ticker))
+
+    async def on_focus(self):
+        if not self.detailed:
+            self.post_message(self.Selected(self.ticker))
 
     async def on_mount(self):
         await self.load_data()
@@ -33,6 +57,8 @@ class StockPlot(PlotextPlot):
         x, prices = await get_stock_history_threadsafe(self.ticker)
 
         if not x or not prices:
+            self.plt.clear_figure()
+            self.refresh()
             return
 
         self.plt.clear_figure()
