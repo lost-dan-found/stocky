@@ -1,3 +1,4 @@
 A TUI for displaying stocks
 
-<img width="1466" height="922" alt="Screenshot 2026-01-29 at 12 07 39 AM" src="https://github.com/user-attachments/assets/d7c6f245-604a-457f-b2a5-eeb2a0744a17" />
+<img width="1582" height="1035" alt="Screenshot 2026-02-02 at 10 00 16 PM" src="https://github.com/user-attachments/assets/650adbd5-1253-415c-baa7-67d1e72deb40" />
+
