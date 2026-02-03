@@ -17,7 +17,7 @@ class AddStockModal(ModalScreen[str]):
         padding: 0 1;
         width: 60;
         height: 10;
-        border: solid white;
+        border: round white;
         background: $surface;
     }
 

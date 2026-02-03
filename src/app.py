@@ -25,18 +25,18 @@ class Stocky(App):
     .sidebar-plot, #add_stock_button {
         height: 25%;
         width: 100%;
-        border: solid white;
+        border: round white;
         background: transparent;
     }
     
     .sidebar-plot:hover, #add_stock_button:hover, .sidebar-plot:focus, #add_stock_button:focus {
-        border: solid white;
+        border: round white;
     }
 
     #display {
         column-span: 3;
         row-span: 3;
-        border: solid white;
+        border: round white;
         padding: 0;
         background: transparent;
     }
@@ -44,7 +44,7 @@ class Stocky(App):
     #stock_info {
         content-align: center middle;
         column-span: 3;
-        border: solid white;
+        border: round white;
         padding: 0 0;
         overflow-y: scroll;
         background: transparent;
@@ -52,7 +52,7 @@ class Stocky(App):
     """
 
     stocks = []
-    selected_ticker = "AAPL"
+    selected_ticker = ""
 
     BINDINGS = [("ctrl+q", "quit", "Quit")]
 
